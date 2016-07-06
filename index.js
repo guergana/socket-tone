@@ -10,7 +10,9 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-res.SendFile("public/audio/1.mp3")
+app.get('/audio/1.mp3', function(req, res){
+  res.sendFile(__dirname + '/audio/1.mp3');
+});
 
 
 io.on('connection', function(socket){
@@ -22,7 +24,6 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
     io.emit('chat message', msg);
- 
   });
 });
 
