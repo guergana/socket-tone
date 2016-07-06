@@ -23,7 +23,9 @@
 <script>
 var mySound1 = new Audio('audio/1.mp3');
 var mySound2 = new Audio('audio/2.mp3');
-mySound.load();
+mySound1.load();
+mySound2.load();
+
   var socket = io();
   $('form').submit(function(){
     socket.emit('chat message', $('#m').val());
