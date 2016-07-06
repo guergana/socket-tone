@@ -3,7 +3,14 @@
   "version": "0.0.1",
   "description": "socket io chat",
   "dependencies": {
-	"express": "4.10.2",
-	"socket.io" : "*"
-  }
+    "express": "4.10.2",
+    "socket.io": "*"
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Guergana Tzatchkova",
+  "license": "ISC"
 }
