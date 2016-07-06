@@ -14,6 +14,9 @@ app.get('/audio/1.mp3', function(req, res){
   res.sendFile(__dirname + '/audio/1.mp3');
 });
 
+app.get('/audio/2.mp3', function(req, res){
+  res.sendFile(__dirname + '/audio/2.mp3');
+});
 
 io.on('connection', function(socket){
   console.log('a user connected');

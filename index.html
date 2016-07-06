@@ -21,7 +21,8 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-var mySound = new Audio('audio/1.mp3');
+var mySound1 = new Audio('audio/1.mp3');
+var mySound2 = new Audio('audio/2.mp3');
 mySound.load();
   var socket = io();
   $('form').submit(function(){
@@ -32,7 +33,12 @@ mySound.load();
   });
   socket.on('chat message', function(msg){
     $('#messages').append($('<li>').text(msg));
-	mySound.play();
+	if(msg == '1'){
+		mySound1.play();
+	}
+	if(msg == '2'){
+		mySound2.play();
+	}
   });
 </script>
   </body>
