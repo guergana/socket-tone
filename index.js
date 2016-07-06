@@ -8,6 +8,9 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+//res.SendFile("/audio/1.mp3")
+app.use(express.static('audio'));
+
 io.on('connection', function(socket){
   console.log('a user connected');
    socket.on('disconnect', function(){
