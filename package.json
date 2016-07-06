@@ -1,8 +1,10 @@
 {
-  "name": "socketguer",
+  "name": "socket-chat-example",
   "version": "0.0.1",
   "description": "socket io chat",
   "dependencies": {
+    "express": "4.10.2",
+    "socket.io": "*"
   },
   "main": "index.js",
   "devDependencies": {},
