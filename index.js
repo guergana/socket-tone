@@ -5,13 +5,12 @@ var io = require('socket.io')(http);
 
 var port = process.env.PORT || 3000;
 
-app.use(express.static('public'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-//res.SendFile("public/audio/1.mp3")
+res.SendFile("public/audio/1.mp3")
 
 
 io.on('connection', function(socket){
