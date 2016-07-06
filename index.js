@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 var port = process.env.PORT || 8080;
 
 app.get('/', function(req, res){
-  res.sendFile(express.static(__dirname + '/index.html'));
+  res.sendFile(app.static(__dirname + '/index.html'));
 });
 
 io.on('connection', function(socket){
