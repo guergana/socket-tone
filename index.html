@@ -64,11 +64,12 @@ mySoundD.load();*/
 	socket.on('updatechat', function (username, data) {
 		$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
 		
-		var filename = data + '.mp3'
+		if(data.length == '1'){
+		var filename = 'audio/' + data + '.mp3'
 		var audioElement = document.createElement('audio');
 		audioElement.setAttribute('src', filename);
 		audioElement.play();
-	
+	}
 	/*	if(data == 'a'){
 		mySoundA.play();
 		}
