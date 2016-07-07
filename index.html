@@ -32,6 +32,12 @@ mySound2.load();
     $('#m').val('');
     return false;
   });
+  
+  socket.on('connect', function(){
+		// call the server-side function 'adduser' and send one parameter (value of prompt)
+		socket.emit('adduser', prompt("What's your name?"));
+	});
+	
   socket.on('chat message', function(msg){
     $('#messages').append($('<li>').text(msg));
 	if(msg == '1'){
@@ -41,6 +47,11 @@ mySound2.load();
 		mySound2.play();
 	}
   });
+  
+  // listener, whenever the server emits 'updatechat', this updates the chat body
+	socket.on('updatechat', function (username, data) {
+		$('#messages').append('<b>'+username + ':</b> ' + data + '<br>');
+	});
 </script>
   </body>
 </html>

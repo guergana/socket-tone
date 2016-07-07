@@ -6,21 +6,30 @@ app.use(express.static(__dirname + '/'));
 
 var port = process.env.PORT || 3000;
 
-var userNum = 0;
-
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+var usernames = {};
 
 io.on('connection', function(socket){
-	userNum++;
-	var currentUser = 'user'+userNum;
-	console.log(currentUser + ' connected, connected users: ' + userNum);
+
+	
+	socket.on('adduser', function(username){
+		// we store the username in the socket session for this client
+		socket.username = username;
+		// add the client's username to the global list
+		usernames[username] = username;
+		// echo to client they've connected
+		socket.emit('updatechat', 'SERVER', 'you have connected');
+		// echo globally (all clients) that a person has connected
+		socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected');
+		// update the list of users in chat, client-side
+		//io.sockets.emit('updateusers', usernames);
+	});
 	
 	socket.on('disconnect', function(){
-		socket.emit('chat message', 'a user disconnected');
-		console.log(currentUser + ' disconnected, connected users: ' + userNum);
+		
 	});
   
 	socket.on('chat message', function(msg){
