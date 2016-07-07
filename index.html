@@ -6,8 +6,8 @@
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      form input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
+      form button { width: 16%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
@@ -28,10 +28,19 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-var mySound1 = new Audio('audio/1.mp3');
+/*var mySound1 = new Audio('audio/1.mp3');
 var mySound2 = new Audio('audio/2.mp3');
+var mySoundA = new Audio('audio/a.mp3');
+var mySoundB = new Audio('audio/b.mp3');
+var mySoundC = new Audio('audio/c.mp3');
+var mySoundD = new Audio('audio/d.mp3');
 mySound1.load();
 mySound2.load();
+mySoundA.load();
+mySoundB.load();
+mySoundC.load();
+mySoundD.load();*/
+
 
   var socket = io();
  /* $('form').submit(function(){
@@ -42,7 +51,7 @@ mySound2.load();
   
   $('body').keypress(function(e){
   socket.emit('sendchat', String.fromCharCode( e.which ));
-  /*console.log('keypress', String.fromCharCode( e.which ));*/
+
 });
   
   socket.on('connect', function(){
@@ -54,12 +63,30 @@ mySound2.load();
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 		$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
+		
+		var filename = data + '.mp3'
+		var audioElement = document.createElement('audio');
+		audioElement.setAttribute('src', 'filename');
+		audioElement.play();
+	
+	/*	if(data == 'a'){
+		mySoundA.play();
+		}
+		if(data == 'b'){
+			mySoundB.play();
+		}
+		if(data == 'c'){
+			mySoundC.play();
+		}
+		if(data == 'd'){
+			mySoundD.play();
+		}
 		if(data == '1'){
-		mySound1.play();
+			mySound1.play();
 		}
 		if(data == '2'){
 			mySound2.play();
-		}
+		}*/
 	});
 	
 	
