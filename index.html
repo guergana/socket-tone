@@ -48,7 +48,7 @@ mySound2.load();
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
-		$('#messages').append('<b class='username'>'+username + ':</b> ' + data + '<br>');
+		$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
 		if(data == '1'){
 		mySound1.play();
 		}
