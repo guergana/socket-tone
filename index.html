@@ -14,10 +14,16 @@
     </style>
   </head>
   <body>
+  <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+	<b>USERS</b>
+	<div id="users"></div>
+</div>
+  <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
@@ -48,6 +54,15 @@ mySound2.load();
 		if(data == '2'){
 			mySound2.play();
 		}
+	});
+	
+	
+	// listener, whenever the server emits 'updateusers', this updates the username list
+	socket.on('updateusers', function(data) {
+		$('#users').empty();
+		$.each(data, function(key, value) {
+			$('#users').append('<div>' + key + '</div>');
+		});
 	});
 </script>
   </body>

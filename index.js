@@ -14,7 +14,6 @@ var usernames = {};
 
 io.on('connection', function(socket){
 
-	
 	socket.on('adduser', function(username){
 		// we store the username in the socket session for this client
 		socket.username = username;
@@ -25,11 +24,7 @@ io.on('connection', function(socket){
 		// echo globally (all clients) that a person has connected
 		socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected');
 		// update the list of users in chat, client-side
-		//io.sockets.emit('updateusers', usernames);
-	});
-	
-	socket.on('disconnect', function(){
-		
+		io.sockets.emit('updateusers', usernames);
 	});
 	
 	// when the client emits 'sendchat', this listens and executes
@@ -43,7 +38,7 @@ io.on('connection', function(socket){
 		// remove the username from global usernames list
 		delete usernames[socket.username];
 		// update list of users in chat, client-side
-		//io.sockets.emit('updateusers', usernames);
+		io.sockets.emit('updateusers', usernames);
 		// echo globally that this client has left
 		socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
 	});
