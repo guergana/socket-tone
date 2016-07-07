@@ -28,7 +28,6 @@ mySound2.load();
 
   var socket = io();
   $('form').submit(function(){
-    //socket.emit('chat message', $('#m').val());
     socket.emit('sendchat', $('#m').val());
 	$('#m').val('');
     return false;
@@ -39,19 +38,16 @@ mySound2.load();
 		socket.emit('adduser', prompt("What's your name?"));
 	});
 	
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-	if(msg == '1'){
-		mySound1.play();
-	}
-	if(msg == '2'){
-		mySound2.play();
-	}
-  });
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 		$('#messages').append('<b>'+username + ':</b> ' + data + '<br>');
+		if(data == '1'){
+		mySound1.play();
+		}
+		if(data == '2'){
+			mySound2.play();
+		}
 	});
 </script>
   </body>
