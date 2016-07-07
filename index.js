@@ -19,7 +19,7 @@ io.on('connection', function(socket){
 	console.log(currentUser + ' connected, connected users: ' + userNum);
 	
 	socket.on('disconnect', function(){
-		userNum--;
+		socket.emit('chat message', 'a user disconnected');
 		console.log(currentUser + ' disconnected, connected users: ' + userNum);
 	});
   
