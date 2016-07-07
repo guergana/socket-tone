@@ -6,23 +6,31 @@ app.use(express.static(__dirname + '/'));
 
 var port = process.env.PORT || 3000;
 
+var userNum = 0;
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
 
 io.on('connection', function(socket){
+	userNum++;
+	var currentUser = 'user'+userNum;
+	console.log(currentUser + ' connected, connected users: ' + userNum);
 	
-  console.log('a user connected');
-   socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
+	socket.on('disconnect', function(){
+		userNum--;
+		console.log(currentUser + ' disconnected, connected users: ' + userNum);
+	});
   
-  socket.on('chat message', function(msg){
-	 
-    console.log( 'message: ' + msg);
-    io.emit('chat message', msg);
-  });
+	socket.on('chat message', function(msg){
+		var line = currentUser + ': ' + msg;
+		console.log( 'message: ' + line);
+		io.emit('chat message', line);
+	});
+  
+  
+  
 });
 
 http.listen(port, function(){
