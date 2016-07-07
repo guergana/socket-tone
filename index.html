@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Interative Socket Music</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -64,7 +64,10 @@ mySoundD.load();*/
 	socket.on('updatechat', function (username, data) {
 		$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
 		
-		if(data.length == '1' && data.match(/[a-z0-9]/i) ){
+		//add this to avoid errors when typing uppercase letters
+		data = data.toLowerCase();
+		
+		if(data.length == '1' && data.match(/[a-z1-4]/i) ){
 		var filename = 'audio/' + data + '.mp3'
 		var audioElement = document.createElement('audio');
 		audioElement.setAttribute('src', filename);
