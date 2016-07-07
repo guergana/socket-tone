@@ -11,14 +11,15 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+	  .username { color: #ff0; }
     </style>
   </head>
   <body>
-  <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+  <div style="float:left;width:100px;border-right:1px solid black;padding:10px;overflow:scroll-y;">
 	<b>USERS</b>
 	<div id="users"></div>
 </div>
-  <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+  <div style="float:left;width:300px;overflow:scroll-y;padding:10px;">
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -47,7 +48,7 @@ mySound2.load();
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
-		$('#messages').append('<b>'+username + ':</b> ' + data + '<br>');
+		$('#messages').append('<b class='username'>'+username + ':</b> ' + data + '<br>');
 		if(data == '1'){
 		mySound1.play();
 		}
