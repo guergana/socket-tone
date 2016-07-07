@@ -64,7 +64,7 @@ mySoundD.load();*/
 	socket.on('updatechat', function (username, data) {
 		$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
 		
-		if(data.length == '1'){
+		if(data.length == '1' && data.match(/[a-z0-9]/i) ){
 		var filename = 'audio/' + data + '.mp3'
 		var audioElement = document.createElement('audio');
 		audioElement.setAttribute('src', filename);
