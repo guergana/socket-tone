@@ -28,8 +28,9 @@ mySound2.load();
 
   var socket = io();
   $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
+    //socket.emit('chat message', $('#m').val());
+    socket.emit('sendchat', message);
+	$('#m').val('');
     return false;
   });
   

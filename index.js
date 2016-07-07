@@ -31,11 +31,16 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
 		
 	});
+	
+	// when the client emits 'sendchat', this listens and executes
+	socket.on('sendchat', function (data) {
+		// we tell the client to execute 'updatechat' with 2 parameters
+		io.sockets.emit('updatechat', socket.username, data);
+	});
   
 	socket.on('chat message', function(msg){
-		var line = currentUser + ': ' + msg;
-		console.log( 'message: ' + line);
-		io.emit('chat message', line);
+		console.log( 'message: ' + msg);
+		io.emit('chat message', msg);
 	});
   
   
