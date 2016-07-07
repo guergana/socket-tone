@@ -34,11 +34,16 @@ mySound1.load();
 mySound2.load();
 
   var socket = io();
-  $('form').submit(function(){
+ /* $('form').submit(function(){
     socket.emit('sendchat', $('#m').val());
 	$('#m').val('');
     return false;
-  });
+  });*/
+  
+  $('body').keypress(function(e){
+  socket.emit('sendchat', String.fromCharCode( e.which ));
+  /*console.log('keypress', String.fromCharCode( e.which ));*/
+});
   
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
