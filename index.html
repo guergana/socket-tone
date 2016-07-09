@@ -20,6 +20,7 @@
 	<div id="users"></div>
 </div>
   <div style="float:left;width:300px;overflow:scroll-y;padding:10px;">
+  <input id="hiddenInput" style="visibility: hidden;">
     <ul id="messages"></ul>
     <!--<form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -28,26 +29,11 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-/*var mySound1 = new Audio('audio/1.mp3');
-var mySound2 = new Audio('audio/2.mp3');
-var mySoundA = new Audio('audio/a.mp3');
-var mySoundB = new Audio('audio/b.mp3');
-var mySoundC = new Audio('audio/c.mp3');
-var mySoundD = new Audio('audio/d.mp3');
-mySound1.load();
-mySound2.load();
-mySoundA.load();
-mySoundB.load();
-mySoundC.load();
-mySoundD.load();*/
+
 
 
   var socket = io();
- /* $('form').submit(function(){
-    socket.emit('sendchat', $('#m').val());
-	$('#m').val('');
-    return false;
-  });*/
+
   
   $('body').keypress(function(e){
   socket.emit('sendchat', String.fromCharCode( e.which ));
@@ -73,24 +59,7 @@ mySoundD.load();*/
 		audioElement.setAttribute('src', filename);
 		audioElement.play();
 	}
-	/*	if(data == 'a'){
-		mySoundA.play();
-		}
-		if(data == 'b'){
-			mySoundB.play();
-		}
-		if(data == 'c'){
-			mySoundC.play();
-		}
-		if(data == 'd'){
-			mySoundD.play();
-		}
-		if(data == '1'){
-			mySound1.play();
-		}
-		if(data == '2'){
-			mySound2.play();
-		}*/
+	
 	});
 	
 	
@@ -101,6 +70,11 @@ mySoundD.load();*/
 			$('#users').append('<div>' + key + '</div>');
 		});
 	});
+	
+	 var inputElement = document.getElementById('hiddenInput');
+    inputElement.style.visibility = 'visible'; // unhide the input
+    inputElement.focus(); // focus on it so keyboard pops
+    inputElement.style.visibility = 'hidden'; // hide it again
 </script>
   </body>
 </html>
