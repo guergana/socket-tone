@@ -53,16 +53,8 @@
 				activeColour : "#ED33CF"
 			});
 			
-// Play local key events
-			keyboard.keyDown = function (note, frequency) {
-			    synth.triggerAttack(frequency);
-				 
-			};
 
-			keyboard.keyUp = function () {
-			    synth.triggerRelease();
-			};
-	
+			
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -76,7 +68,16 @@
 		
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
-		keyboard.keyDown(data);
+		
+		keyboard.keyDown = function (note, frequency) {
+			    synth.triggerAttack(frequency);
+				 
+			};
+			
+		keyboard.keyUp = function () {
+			    synth.triggerRelease();
+			};
+	
 		
 	} );
 	
