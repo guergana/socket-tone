@@ -76,9 +76,9 @@
 		
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
+		keyboard.keyDown(data);
 		
-		
-	}, keyboard.keyDown );
+	} );
 	
 	
 	// listener, whenever the server emits 'updateusers', this updates the username list
@@ -89,9 +89,9 @@
 		});
 	});
 	
-	 $('body').keypress(function(e){
+	$('body').keypress(function(e){
   socket.emit('sendchat', String.fromCharCode( e.which ));
-
+	
 });
 
 
