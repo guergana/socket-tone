@@ -78,7 +78,7 @@
 		$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
 		
 		//add this to avoid errors when typing uppercase letters
-		data = data.toLowerCase();
+		//data = data.toLowerCase();
 		synth.triggerAttack(data.frequency);
 		
 		
