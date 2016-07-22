@@ -54,7 +54,14 @@
 			});
 			
 
+		keyboard.keyDown = function (note, frequency) {
+			    synth.triggerAttack(frequency);
+				 socket.emit('sendchat', note);
+			};
 			
+		keyboard.keyUp = function () {
+			    synth.triggerRelease();
+			};		
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -69,15 +76,7 @@
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
 		
-		keyboard.keyDown = function (note, frequency) {
-			    synth.triggerAttack(frequency);
-				 console.log(username +  " emitiendo...")
-			};
-			
-		keyboard.keyUp = function () {
-			    synth.triggerRelease();
-			};
-	
+		
 		
 	} );
 	
@@ -90,10 +89,10 @@
 		});
 	});
 	
-	$('body').keypress(function(e){
+/*	$('body').keypress(function(e){
   socket.emit('sendchat', String.fromCharCode( e.which ));
 	
-});
+});*/
 
 
 </script>
