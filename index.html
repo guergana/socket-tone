@@ -42,10 +42,10 @@
   var socket = io();
 
   
-  $('body').keypress(function(e){
+ /* $('body').keypress(function(e){
   socket.emit('sendchat', String.fromCharCode( e.which ));
 
-});
+});*/
   
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -60,12 +60,7 @@
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
 		
-		/*if(data.length == '1' && data.match(/[a-z1-4]/i) ){
-		var filename = 'audio/' + data + '.mp3'
-		var audioElement = document.createElement('audio');
-		audioElement.setAttribute('src', filename);
-		audioElement.play();
-	}*/
+	
 	
 	});
 	
@@ -113,10 +108,12 @@
 
 			keyboard.keyDown = function (note, frequency) {
 			    synth.triggerAttack(frequency);
+				 
 			};
 
-			keyboard.keyUp = function () {
+			keyboard.keyUp = function (e) {
 			    synth.triggerRelease();
+				socket.emit('sendchat', String.fromCharCode( e.which ));
 			};
 
 		});
