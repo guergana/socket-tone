@@ -55,7 +55,7 @@
 			
 
 		keyboard.keyDown = function (note, frequency) {
-			    synth.triggerAttack(frequency);
+			    
 				 socket.emit('sendchat', note);
 			};
 			
@@ -75,7 +75,7 @@
 		
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
-		
+		synth.triggerAttack(frequency);
 		
 		
 	} );
