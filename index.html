@@ -57,14 +57,21 @@
 		keyboard.keyDown = function (note, frequency) {
 			    var data = {
 				note: note,
-				frequency : frequency
+				frequency : frequency,
+				type: 'keyDown'
 				};
 				
 				 socket.emit('sendchat', data);
 			};
 			
 		keyboard.keyUp = function () {
-			    synth.triggerRelease();
+			var data = {
+				note: note,
+				frequency : frequency,
+				type: 'keyUp'
+			};
+				socket.emit('sendchat', data);
+			    
 			};		
 
   socket.on('connect', function(){
@@ -79,7 +86,13 @@
 		
 		//add this to avoid errors when typing uppercase letters
 		//data = data.toLowerCase();
-		synth.triggerAttack(data.frequency);
+		if(data.type === 'keyDown'){
+			synth.triggerAttack(data.frequency);
+		}
+		
+		if(data.type === 'keyUp'){
+			synth.triggerRelease();
+		}
 		
 		
 	} );
