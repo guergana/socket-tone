@@ -55,8 +55,12 @@
 			
 
 		keyboard.keyDown = function (note, frequency) {
-			    
-				 socket.emit('sendchat', note);
+			    var data = {
+				this.note = note;
+				this.frequency = frequency;
+				};
+				
+				 socket.emit('sendchat', data);
 			};
 			
 		keyboard.keyUp = function () {
@@ -71,11 +75,11 @@
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
-		$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
+		$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
 		
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
-		synth.triggerAttack(frequency);
+		synth.triggerAttack(data.frequency);
 		
 		
 	} );
