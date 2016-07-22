@@ -18,16 +18,23 @@
   <div style="float:left;width:100px;border-right:1px solid black;padding:10px;overflow:scroll-y;">
 	<b>USERS</b>
 	<div id="users"></div>
+	
 </div>
-  <div style="float:left;width:300px;overflow:scroll-y;padding:10px;">
-  <input id="hiddenInput" style="visibility: hidden;">
+
+  <div id="Content" style="float:left;width:300px;overflow:scroll-y;padding:10px;">
+	<div id="Keyboard" style="width:800px;"></div>
     <ul id="messages"></ul>
     <!--<form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form> -->
 </div>
-<script src="/socket.io/socket.io.js"></script>
+<script src="./node_modules/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="./scripts/draggabilly.js"></script>
+<script type="text/javascript" src="./scripts/StartAudioContext.js"></script>
+<script type="text/javascript" src="./scripts/Interface.js"></script>
+<script type="text/javascript" src="./scripts/qwerty-hancock.js"></script>
 <script>
 
 
@@ -53,12 +60,12 @@
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
 		
-		if(data.length == '1' && data.match(/[a-z1-4]/i) ){
+		/*if(data.length == '1' && data.match(/[a-z1-4]/i) ){
 		var filename = 'audio/' + data + '.mp3'
 		var audioElement = document.createElement('audio');
 		audioElement.setAttribute('src', filename);
 		audioElement.play();
-	}
+	}*/
 	
 	});
 	
@@ -71,10 +78,48 @@
 		});
 	});
 	
-	 var inputElement = document.getElementById('hiddenInput');
-    inputElement.style.visibility = 'visible'; // unhide the input
-    inputElement.focus(); // focus on it so keyboard pops
-    inputElement.style.visibility = 'hidden'; // hide it again
+
 </script>
+	<script type="text/javascript">
+
+		var synth = new Tone.Synth({
+			"oscillator" : {
+				"type" : "square"
+			},
+			"envelope" : {
+				"attack" : 0.01,
+				"decay" : 0.2,
+				"sustain" : 0.2,
+				"release" : 0.2,
+			}
+		}).toMaster();
+
+	</script>
+
+	<script id="GUI" type="text/javascript">
+		$(function(){
+
+			var keyboard = new QwertyHancock({
+				id: "Keyboard",
+				width: $("#Content").width(),
+				height: 150,
+				octaves: Interface.isMobile ? 1.26 : 2,
+				startNote: "C4",
+				whiteKeyColour: "white",
+				blackKeyColour: "#22DBC0",
+				hoverColour: "#1EDF3E",
+				activeColour : "#ED33CF"
+			});
+
+			keyboard.keyDown = function (note, frequency) {
+			    synth.triggerAttack(frequency);
+			};
+
+			keyboard.keyUp = function () {
+			    synth.triggerRelease();
+			};
+
+		});
+	</script>
   </body>
 </html>
