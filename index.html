@@ -42,10 +42,7 @@
   var socket = io();
 
   
- /* $('body').keypress(function(e){
-  socket.emit('sendchat', String.fromCharCode( e.which ));
 
-});*/
   
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -73,6 +70,33 @@
 		});
 	});
 	
+	 $('body').keypress(function(e){
+  socket.emit('sendchat', String.fromCharCode( e.which ));
+
+});
+
+var keyboard = new QwertyHancock({
+				id: "Keyboard",
+				width: $("#Content").width(),
+				height: 150,
+				octaves: Interface.isMobile ? 1.26 : 2,
+				startNote: "C4",
+				whiteKeyColour: "white",
+				blackKeyColour: "#22DBC0",
+				hoverColour: "#1EDF3E",
+				activeColour : "#ED33CF"
+			});
+
+			keyboard.keyDown = function (note, frequency) {
+			    synth.triggerAttack(frequency);
+				 
+			};
+
+			keyboard.keyUp = function (e) {
+			    synth.triggerRelease();
+				socket.emit('sendchat', String.fromCharCode( e.which ));
+			};
+	
 
 </script>
 	<script type="text/javascript">
@@ -92,7 +116,7 @@
 	</script>
 
 	<script id="GUI" type="text/javascript">
-		$(function(){
+		/*$(function(){
 
 			var keyboard = new QwertyHancock({
 				id: "Keyboard",
@@ -116,7 +140,7 @@
 				socket.emit('sendchat', String.fromCharCode( e.which ));
 			};
 
-		});
+		});*/
 	</script>
   </body>
 </html>
