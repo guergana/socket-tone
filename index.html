@@ -64,7 +64,7 @@
 				 socket.emit('sendchat', data);
 			};
 			
-		keyboard.keyUp = function () {
+		keyboard.keyUp = function (note, frequency) {
 			var data = {
 				note: note,
 				frequency : frequency,
