@@ -82,12 +82,13 @@
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
-		$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
+		
 		
 		//add this to avoid errors when typing uppercase letters
 		//data = data.toLowerCase();
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.frequency);
+			$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
 		}
 		
 		if(data.type === 'keyUp'){
