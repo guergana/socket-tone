@@ -23,7 +23,7 @@
 	
 </div>
 
-  <div id="Content" style="float:left;width:300px;overflow-y:scroll-y;padding:10px;">
+  <div style="float:left;width:300px;overflow-y:scroll-y;padding:10px;">
 	
     <ul id="messages"></ul>
     <!--<form action="">
@@ -45,7 +45,7 @@
   
   var keyboard = new QwertyHancock({
 				id: "Keyboard",
-				width: $("#Content").width(),
+				width: $(window).width(),
 				height: 150,
 				octaves: Interface.isMobile ? 1.26 : 2,
 				startNote: "C4",
