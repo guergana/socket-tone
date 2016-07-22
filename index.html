@@ -76,9 +76,9 @@
 		
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
-		synth.triggerAttack(frequency);
 		
-	});
+		
+	}, keyboard.keyDown );
 	
 	
 	// listener, whenever the server emits 'updateusers', this updates the username list
