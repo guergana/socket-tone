@@ -56,8 +56,8 @@
 
 		keyboard.keyDown = function (note, frequency) {
 			    var data = {
-				this.note = note;
-				this.frequency = frequency;
+				note: note,
+				frequency : frequency
 				};
 				
 				 socket.emit('sendchat', data);
