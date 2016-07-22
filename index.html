@@ -40,10 +40,30 @@
 
 
   var socket = io();
-
   
+  var keyboard = new QwertyHancock({
+				id: "Keyboard",
+				width: $("#Content").width(),
+				height: 150,
+				octaves: Interface.isMobile ? 1.26 : 2,
+				startNote: "C4",
+				whiteKeyColour: "white",
+				blackKeyColour: "#22DBC0",
+				hoverColour: "#1EDF3E",
+				activeColour : "#ED33CF"
+			});
+			
+// Play local key events
+			keyboard.keyDown = function (note, frequency) {
+			    synth.triggerAttack(frequency);
+				 
+			};
 
-  
+			keyboard.keyUp = function () {
+			    synth.triggerRelease();
+			};
+	
+
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
 		socket.emit('adduser', prompt("What's your name?"));
@@ -56,9 +76,8 @@
 		
 		//add this to avoid errors when typing uppercase letters
 		data = data.toLowerCase();
+		synth.triggerAttack(frequency);
 		
-	
-	
 	});
 	
 	
@@ -75,28 +94,6 @@
 
 });
 
-var keyboard = new QwertyHancock({
-				id: "Keyboard",
-				width: $("#Content").width(),
-				height: 150,
-				octaves: Interface.isMobile ? 1.26 : 2,
-				startNote: "C4",
-				whiteKeyColour: "white",
-				blackKeyColour: "#22DBC0",
-				hoverColour: "#1EDF3E",
-				activeColour : "#ED33CF"
-			});
-
-			keyboard.keyDown = function (note, frequency) {
-			    synth.triggerAttack(frequency);
-				 
-			};
-
-			keyboard.keyUp = function (e) {
-			    synth.triggerRelease();
-				socket.emit('sendchat', String.fromCharCode( e.which ));
-			};
-	
 
 </script>
 	<script type="text/javascript">
@@ -115,32 +112,6 @@ var keyboard = new QwertyHancock({
 
 	</script>
 
-	<script id="GUI" type="text/javascript">
-		/*$(function(){
-
-			var keyboard = new QwertyHancock({
-				id: "Keyboard",
-				width: $("#Content").width(),
-				height: 150,
-				octaves: Interface.isMobile ? 1.26 : 2,
-				startNote: "C4",
-				whiteKeyColour: "white",
-				blackKeyColour: "#22DBC0",
-				hoverColour: "#1EDF3E",
-				activeColour : "#ED33CF"
-			});
-
-			keyboard.keyDown = function (note, frequency) {
-			    synth.triggerAttack(frequency);
-				 
-			};
-
-			keyboard.keyUp = function (e) {
-			    synth.triggerRelease();
-				socket.emit('sendchat', String.fromCharCode( e.which ));
-			};
-
-		});*/
-	</script>
+	
   </body>
 </html>
