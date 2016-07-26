@@ -80,6 +80,7 @@
 
 	var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'audio/paniloop.mp3');
+	audioElement.load();
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -88,7 +89,7 @@
 		
 		socket.emit('adduser', name);
 		
-		audioElement.load();
+
 		
 		if( name != null){
 		
