@@ -90,8 +90,6 @@
 		audioElement.load();
 		socket.emit('adduser', name);
 		
-		socket.emit('time', audioElement.currentTime);
-		console.log(audioElement.currentTime);
 	});
 
 	socket.on('isfirstuser', function(isfirstuser){
@@ -107,7 +105,9 @@
 					this.play();
 				}, false);
 			
-		} /*else{
+		}
+		socket.emit('time', audioElement.currentTime);
+		/*else{
 				 socket.emit('time', audioElement.currentTime);
 				console.log(audioElement.currentTime);
 				
