@@ -113,11 +113,9 @@
 
 	var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'audio/paniloop.mp3');
-    audioElement.load()
-	audioElement.addEventListener("load", function() {
-               audioElement.play();
-              console.log("loop file loaded!");
-       }, true);
+    audioElement.load();
+	audio.autoplay = true;
+	
 
 </script>
 	<script type="text/javascript">
