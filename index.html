@@ -118,6 +118,11 @@
 		audioElement.play();
 		alert("loop loaded! biyatch");
 };
+
+	audioElement.addEventListener('ended', function() {
+		this.currentTime = 0;
+		this.play();
+	}, false);
 	
 
 </script>
