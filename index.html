@@ -107,7 +107,7 @@
 			
 		} 
 		if(audioElement.currentTime != 0){
-			socket.broadcast.emit('time', audioElement.currentTime);
+			socket.emit('time', audioElement.currentTime);
 		}
 		
 	});
@@ -116,6 +116,7 @@
 		
 		audioElement.oncanplaythrough = function() {
 					audioElement.currentTime = time;
+					console.log(time);
 					audioElement.play();
 			};
 	
