@@ -63,7 +63,7 @@
 				type: 'keyDown'
 				};
 				
-				 socket.emit('sendchat', data);
+				socket.emit('sendchat', data);
 			};
 			
 		keyboard.keyUp = function (note, frequency) {
@@ -74,39 +74,50 @@
 			};
 				socket.emit('sendchat', data);
 			    
-			};		
+			};			
+			
+	var audioElement = document.createElement('audio');
+	audioElement.setAttribute('src', 'audio/paniloop.mp3');
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
 		socket.emit('adduser', function(){
 		
-			var name = prompt("What's your name?");
-			
+<<<<<<< HEAD
+		var name = prompt("What's your name?");
+		
+		socket.emit('adduser', name);
+		
+		audioElement.load();
+		
+		if( name != null){
+		
 			//Load loop
-			if( name != null){
-				var audioElement = document.createElement('audio');
-				audioElement.setAttribute('src', 'audio/paniloop.mp3');
-				audioElement.load();
+	
+				
+				
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();
 					console.log("loop loaded! biyatch");
-				};
+			};
 
 				audioElement.addEventListener('ended', function() {
 					this.currentTime = 0;
 					this.play();
 				}, false);
-			}
+				
+			//socket.emit('settime', audioElement.currentTime);
+				
+		}
+=======
+			prompt("What's your name?");
 		});
+>>>>>>> parent of 0fac1a4... tried another way
 	});
-	
-  
+
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 		
-		
-		//add this to avoid errors when typing uppercase letters
-		//data = data.toLowerCase();
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.frequency);
 			$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
@@ -126,9 +137,23 @@
 		$.each(data, function(key, value) {
 			$('#users').append('<div>' + key + '</div>');
 		});
+		
 	});
 	
-	
+	//Load loop
+
+	var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'audio/paniloop.mp3');
+    audioElement.load();
+	audioElement.oncanplaythrough = function() {
+		audioElement.play();
+		console.log("loop loaded! biyatch");
+};
+
+	audioElement.addEventListener('ended', function() {
+		this.currentTime = 0;
+		this.play();
+	}, false);
 	
 
 </script>
