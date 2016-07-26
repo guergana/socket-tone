@@ -113,10 +113,10 @@
 	});
 	
 	socket.on('play', function(time){
-		
+			audioElement.currentTime = time;
+			console.log(time);
 		audioElement.oncanplaythrough = function() {
-					audioElement.currentTime = time;
-					console.log(time);
+					
 					audioElement.play();
 			};
 	
