@@ -36,6 +36,7 @@ io.on('connection', function(socket){
 		io.sockets.emit('updateusers', usernames);
 		
 		io.sockets.emit('isfirstuser', isfirstuser);
+		console.log("how many active users: " + usernames.length + " isfirstuser var = "+ isfirstuser);
 		
 	});
 	

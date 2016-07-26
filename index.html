@@ -111,7 +111,7 @@
 	});
 
 	socket.on('isfirstuser', function(isfirstuser){
-		if(isfirstuser === true){
+		if(isfirstuser == true){
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();
 			};
