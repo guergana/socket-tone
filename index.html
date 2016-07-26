@@ -63,7 +63,7 @@
 				type: 'keyDown'
 				};
 				
-				 socket.emit('sendchat', data);
+				socket.emit('sendchat', data);
 			};
 			
 		keyboard.keyUp = function (note, frequency) {
@@ -76,12 +76,8 @@
 			    
 			};			
 			
-	//Load loop
 	var audioElement = document.createElement('audio');
 	audioElement.setAttribute('src', 'audio/paniloop.mp3');
-	audioElement.load();
-	
-	
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -90,7 +86,13 @@
 		
 		socket.emit('adduser', name);
 		
+		audioElement.load();
+		
 		if( name != null){
+		
+			//Load loop
+	
+				
 				
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();

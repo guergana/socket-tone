@@ -29,10 +29,10 @@ io.on('connection', function(socket){
 		
 	});
 	
-	socket.on('settime', function(time){
+	/*socket.on('settime', function(time){
 		socket.time = time;
 		
-	});
+	});*/
 	
 
 	
