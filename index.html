@@ -75,6 +75,14 @@
 				socket.emit('sendchat', data);
 			    
 			};		
+			
+			
+	//Load loop
+	var audioElement = document.createElement('audio');
+	audioElement.setAttribute('src', 'audio/paniloop.mp3');
+	audioElement.load();
+	
+	
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -83,12 +91,10 @@
 		
 		socket.emit('adduser', name);
 		
+		socket.emit('time', audioElement.currentTime);
+		
 		if( name != null){
-					//Load loop
-
-				var audioElement = document.createElement('audio');
-				audioElement.setAttribute('src', 'audio/paniloop.mp3');
-				audioElement.load();
+				
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();
 					console.log("loop loaded! biyatch");
@@ -98,16 +104,18 @@
 					this.currentTime = 0;
 					this.play();
 				}, false);
+				
+			socket.emit('time', audioElement.currentTime);
+				
 		}
 	});
+
 	
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 		
 		
-		//add this to avoid errors when typing uppercase letters
-		//data = data.toLowerCase();
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.frequency);
 			$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
@@ -127,6 +135,7 @@
 		$.each(data, function(key, value) {
 			$('#users').append('<div>' + key + '</div>');
 		});
+		
 	});
 	
 	

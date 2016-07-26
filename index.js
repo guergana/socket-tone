@@ -25,7 +25,15 @@ io.on('connection', function(socket){
 		socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected');
 		// update the list of users in chat, client-side
 		io.sockets.emit('updateusers', usernames);
+		
 	});
+	
+	socket.on('time', function(time){
+		socket.time = time;
+		socket.broadcast.emit('updatechat', 'SERVER', 'time is: ' + time );
+	});
+	
+
 	
 	// when the client emits 'sendchat', this listens and executes
 	socket.on('sendchat', function (data) {
