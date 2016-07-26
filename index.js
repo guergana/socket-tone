@@ -25,14 +25,10 @@ io.on('connection', function(socket){
 		socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected');
 		// update the list of users in chat, client-side
 		io.sockets.emit('updateusers', usernames);
-		socket.broadcast.emit('updatechat', 'SERVER', 'time is: ' + time );
+		
 		
 	});
 	
-	/*socket.on('settime', function(time){
-		socket.time = time;
-		
-	});*/
 	
 
 	
