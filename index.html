@@ -74,8 +74,7 @@
 			};
 				socket.emit('sendchat', data);
 			    
-			};		
-			
+			};			
 			
 	//Load loop
 	var audioElement = document.createElement('audio');
@@ -103,7 +102,7 @@
 					this.play();
 				}, false);
 				
-			socket.emit('settime', audioElement.currentTime);
+			//socket.emit('settime', audioElement.currentTime);
 				
 		}
 	});
