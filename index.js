@@ -11,6 +11,7 @@ app.get('/', function(req, res){
 });
 
 var usernames = {};
+var isfirstuser;
 
 io.on('connection', function(socket){
 
@@ -19,6 +20,14 @@ io.on('connection', function(socket){
 		socket.username = username;
 		// add the client's username to the global list
 		usernames[username] = username;
+		
+		if (usernames.length == 1){
+			isfirstuser = true;
+			
+		} else{
+			isfirstuser = false;
+			
+		}
 		// echo to client they've connected
 		socket.emit('updatechat', 'SERVER', 'you have connected');
 		// echo globally (all clients) that a person has connected
@@ -26,6 +35,7 @@ io.on('connection', function(socket){
 		// update the list of users in chat, client-side
 		io.sockets.emit('updateusers', usernames);
 		
+		socket.emit('isfirstuser', isfirstuser);
 		
 	});
 	

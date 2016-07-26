@@ -91,11 +91,10 @@
 		var name = prompt("What's your name?");
 		
 		socket.emit('adduser', name);
-		console.log('user connected!');
 		
-		socket.emit('time', audioElement.currentTime);
+		//socket.emit('time', audioElement.currentTime);
 		
-		if( name != null){
+		/*if( name != null){
 				
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();
@@ -106,11 +105,27 @@
 					this.play();
 				}, false);
 				
-			//socket.emit('time', audioElement.currentTime);
+			
 				
-		}
+		}*/
 	});
 
+	socket.on('isfirstuser', function(isfirstuser){
+		if(isfirstuser === true){
+				audioElement.oncanplaythrough = function() {
+					audioElement.play();
+			};
+
+				audioElement.addEventListener('ended', function() {
+					this.currentTime = 0;
+					this.play();
+				}, false);
+		
+		} else{
+				socket.emit('time', audioElement.currentTime);
+		}
+		
+	});
 	
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
