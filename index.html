@@ -120,10 +120,12 @@
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.frequency);
 			$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
-		}
-		
-		if(data.type === 'keyUp'){
+		} else if(data.type === 'keyUp'){
 			synth.triggerRelease();
+		} else {
+		
+			// if it's not a note. if it's a SERVER message, as when someone connects
+			$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
 		}
 		
 		
