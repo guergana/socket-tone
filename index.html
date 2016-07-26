@@ -107,7 +107,7 @@
 			
 		} 
 		if(audioElement.currentTime != 0){
-			socket.emit('time', audioElement.currentTime);
+			socket.broadcast.emit('time', audioElement.currentTime);
 		}
 		
 	});
