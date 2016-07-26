@@ -44,7 +44,7 @@ io.on('connection', function(socket){
 	socket.on('time', function(time){
 		
 		socket.time = time;
-	
+		io.sockets.emit('updatechat', 'SERVER', 'loop play time :' + socket.time);
 	});
 	
 
