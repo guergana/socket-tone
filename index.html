@@ -78,10 +78,27 @@
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
-		socket.emit('adduser', function(){
 		
-			prompt("What's your name?");
-		});
+		var name = prompt("What's your name?");
+		
+		socket.emit('adduser', name);
+		
+		if( name != null){
+					//Load loop
+
+				var audioElement = document.createElement('audio');
+				audioElement.setAttribute('src', 'audio/paniloop.mp3');
+				audioElement.load();
+				audioElement.oncanplaythrough = function() {
+					audioElement.play();
+					console.log("loop loaded! biyatch");
+			};
+
+				audioElement.addEventListener('ended', function() {
+					this.currentTime = 0;
+					this.play();
+				}, false);
+		}
 	});
 	
   
@@ -112,20 +129,6 @@
 		});
 	});
 	
-	//Load loop
-
-	var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'audio/paniloop.mp3');
-    audioElement.load();
-	audioElement.oncanplaythrough = function() {
-		audioElement.play();
-		console.log("loop loaded! biyatch");
-};
-
-	audioElement.addEventListener('ended', function() {
-		this.currentTime = 0;
-		this.play();
-	}, false);
 	
 
 </script>
