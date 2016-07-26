@@ -80,23 +80,7 @@
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
 		socket.emit('adduser', function(){
 		
-			var name = prompt("What's your name?");
-			
-			//Load loop
-			if( name != null){
-				var audioElement = document.createElement('audio');
-				audioElement.setAttribute('src', 'audio/paniloop.mp3');
-				audioElement.load();
-				audioElement.oncanplaythrough = function() {
-					audioElement.play();
-					console.log("loop loaded! biyatch");
-				};
-
-				audioElement.addEventListener('ended', function() {
-					this.currentTime = 0;
-					this.play();
-				}, false);
-			}
+			prompt("What's your name?");
 		});
 	});
 	
@@ -128,7 +112,20 @@
 		});
 	});
 	
-	
+	//Load loop
+
+	var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'audio/paniloop.mp3');
+    audioElement.load();
+	audioElement.oncanplaythrough = function() {
+		audioElement.play();
+		console.log("loop loaded! biyatch");
+};
+
+	audioElement.addEventListener('ended', function() {
+		this.currentTime = 0;
+		this.play();
+	}, false);
 	
 
 </script>
