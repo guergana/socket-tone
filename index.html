@@ -109,11 +109,15 @@
 		});
 	});
 	
-/*	$('body').keypress(function(e){
-  socket.emit('sendchat', String.fromCharCode( e.which ));
-	
-});*/
+	//Load loop
 
+	var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'audio/paniloop.mp3');
+    audioElement.load()
+	audioElement.addEventListener("load", function() {
+               audioElement.play();
+              console.log("loop file loaded!");
+       }, true);
 
 </script>
 	<script type="text/javascript">
