@@ -92,7 +92,8 @@
 		
 		socket.emit('adduser', name);
 		console.log('user connected!');
-		//socket.emit('time', audioElement.currentTime);
+		
+		socket.emit('time', audioElement.currentTime);
 		
 		if( name != null){
 				

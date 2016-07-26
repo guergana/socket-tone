@@ -29,6 +29,11 @@ io.on('connection', function(socket){
 		
 	});
 	
+	socket.on('time', function(time){
+		
+		socket.time = time;
+		socket.emit('updatechat', 'SERVER', 'loop time is: ' + socket.time);
+	});
 	
 
 	
