@@ -95,7 +95,7 @@
 	socket.on('isfirstuser', function(isfirstuser){
 		
 		if(isfirstuser == true){
-				$('#messages').prepend('<button onclick="playloop()" type="button">Start loop</button>');
+				$('#messages').append('<button onclick="playloop()" type="button">Start loop</button>');
 				
 
 				audioElement.addEventListener('ended', function() {
