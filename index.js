@@ -21,7 +21,7 @@ io.on('connection', function(socket){
 		// add the client's username to the global list
 		usernames[username] = username;
 		
-		if (usernames.length == 1){
+		if (Object.keys(usernames).length == 1){
 			isfirstuser = true;
 			
 		} else{
