@@ -91,14 +91,13 @@
 		var name = prompt("What's your name?");
 		
 		socket.emit('adduser', name);
-		
-		socket.emit('time', audioElement.currentTime);
+		console.log('user connected!');
+		//socket.emit('time', audioElement.currentTime);
 		
 		if( name != null){
 				
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();
-					console.log("loop loaded! biyatch");
 			};
 
 				audioElement.addEventListener('ended', function() {
@@ -106,7 +105,7 @@
 					this.play();
 				}, false);
 				
-			socket.emit('time', audioElement.currentTime);
+			//socket.emit('time', audioElement.currentTime);
 				
 		}
 	});
