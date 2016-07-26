@@ -74,7 +74,25 @@
 			};
 				socket.emit('sendchat', data);
 			    
-			};			
+			};	
+
+		//Load loop
+
+	var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'audio/paniloop.mp3');
+	audioElement.load();
+	
+    audioElement.oncanplaythrough = function() {
+		audioElement.play();
+		console.log("loop loaded! biyatch");
+};
+
+	audioElement.addEventListener('ended', function() {
+		this.currentTime = 0;
+		this.play();
+	}, false);
+
+				
 			
 
   socket.on('connect', function(){
@@ -131,23 +149,7 @@
 		
 	});
 	
-		//Load loop
 
-	var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'audio/paniloop.mp3');
-	audioElement.load();
-	
-    audioElement.oncanplaythrough = function() {
-		audioElement.play();
-		console.log("loop loaded! biyatch");
-};
-
-	audioElement.addEventListener('ended', function() {
-		this.currentTime = 0;
-		this.play();
-	}, false);
-
-	
 
 </script>
 	<script type="text/javascript">
