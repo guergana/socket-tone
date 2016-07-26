@@ -21,6 +21,7 @@ io.on('connection', function(socket){
 		// add the client's username to the global list
 		usernames[username] = username;
 		
+		// usernames is not an array, it's an object, with this we see the size of our object.
 		if (Object.keys(usernames).length == 1){
 			isfirstuser = true;
 			

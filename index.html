@@ -92,22 +92,6 @@
 		
 		socket.emit('adduser', name);
 		
-		//socket.emit('time', audioElement.currentTime);
-		
-		/*if( name != null){
-				
-				audioElement.oncanplaythrough = function() {
-					audioElement.play();
-			};
-
-				audioElement.addEventListener('ended', function() {
-					this.currentTime = 0;
-					this.play();
-				}, false);
-				
-			
-				
-		}*/
 	});
 
 	socket.on('isfirstuser', function(isfirstuser){
@@ -122,7 +106,7 @@
 					this.currentTime = 0;
 					this.play();
 				}, false);
-		
+			console.log('hola desde adentro de donde debe tocar la musica');
 		} else{
 				socket.emit('time', audioElement.currentTime);
 		}
