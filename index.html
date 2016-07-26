@@ -91,7 +91,6 @@
 		
 		socket.emit('adduser', name);
 		
-		
 		if( name != null){
 				
 				audioElement.oncanplaythrough = function() {
@@ -109,11 +108,8 @@
 		}
 	});
 
-	
-  
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
-		
 		
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.frequency);

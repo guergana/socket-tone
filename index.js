@@ -31,7 +31,7 @@ io.on('connection', function(socket){
 	
 	socket.on('settime', function(time){
 		socket.time = time;
-		io.sockets.emit('updatechat', 'SERVER', time);
+		
 	});
 	
 
