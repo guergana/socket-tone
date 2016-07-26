@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
   <head>
@@ -63,7 +64,7 @@
 				type: 'keyDown'
 				};
 				
-				socket.emit('sendchat', data);
+				 socket.emit('sendchat', data);
 			};
 			
 		keyboard.keyUp = function (note, frequency) {
@@ -74,41 +75,28 @@
 			};
 				socket.emit('sendchat', data);
 			    
-			};	
-
-		//Load loop
-
+			};		
+			
+			
+	//Load loop
 	var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'audio/paniloop.mp3');
+	audioElement.setAttribute('src', 'audio/paniloop.mp3');
 	audioElement.load();
 	
-    audioElement.oncanplaythrough = function() {
-		audioElement.play();
-		console.log("loop loaded! biyatch");
-};
-
-	audioElement.addEventListener('ended', function() {
-		this.currentTime = 0;
-		this.play();
-	}, false);
-
-				
-			
+	
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
-
+		
 		var name = prompt("What's your name?");
 		
 		socket.emit('adduser', name);
 		
-
+		socket.emit('time', audioElement.currentTime);
 		
 		if( name != null){
-		
-			//Load loop
-	
-				/*audioElement.oncanplaythrough = function() {
+				
+				audioElement.oncanplaythrough = function() {
 					audioElement.play();
 					console.log("loop loaded! biyatch");
 			};
@@ -116,17 +104,18 @@
 				audioElement.addEventListener('ended', function() {
 					this.currentTime = 0;
 					this.play();
-				}, false);*/
+				}, false);
 				
-			
+			socket.emit('time', audioElement.currentTime);
 				
 		}
+	});
 
-		});
-
-
+	
+  
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
+		
 		
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.frequency);
@@ -140,6 +129,7 @@
 		
 	} );
 	
+	
 	// listener, whenever the server emits 'updateusers', this updates the username list
 	socket.on('updateusers', function(data) {
 		$('#users').empty();
@@ -149,7 +139,7 @@
 		
 	});
 	
-
+	
 
 </script>
 	<script type="text/javascript">
