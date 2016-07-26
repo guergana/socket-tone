@@ -78,24 +78,21 @@
 			
 	var audioElement = document.createElement('audio');
 	audioElement.setAttribute('src', 'audio/paniloop.mp3');
+	audioElement.load();
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
 		socket.emit('adduser', function(){
 		
-
 		var name = prompt("What's your name?");
 		
 		socket.emit('adduser', name);
 		
-		audioElement.load();
 		
 		if( name != null){
 		
 			//Load loop
-	
-				
-				
+
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();
 					console.log("loop loaded! biyatch");
@@ -106,7 +103,6 @@
 					this.play();
 				}, false);
 				
-			
 				
 		}
 
@@ -141,9 +137,7 @@
 	
 	//Load loop
 
-	var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'audio/paniloop.mp3');
-    audioElement.load();
+  /*  audioElement.load();
 	audioElement.oncanplaythrough = function() {
 		audioElement.play();
 		console.log("loop loaded! biyatch");
@@ -152,7 +146,7 @@
 	audioElement.addEventListener('ended', function() {
 		this.currentTime = 0;
 		this.play();
-	}, false);
+	}, false);*/
 	
 
 </script>
