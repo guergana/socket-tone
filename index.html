@@ -105,14 +105,20 @@
 					this.play();
 				}, false);
 			
+		} 
+		if(audioElement.currentTime != 0){
+			socket.emit('time', audioElement.currentTime);
 		}
-		socket.emit('time', audioElement.currentTime);
-		/*else{
-				 socket.emit('time', audioElement.currentTime);
-				console.log(audioElement.currentTime);
-				
-		}*/
 		
+	});
+	
+	socket.on('play', function(time){
+		
+		audioElement.oncanplaythrough = function() {
+					audioElement.currentTime = time;
+					audioElement.play();
+			};
+	
 	});
 	
   

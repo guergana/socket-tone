@@ -44,10 +44,10 @@ io.on('connection', function(socket){
 	socket.on('time', function(time){
 		
 		socket.time = time;
-		io.sockets.emit('updatechat', 'SERVER', 'loop play time :' + socket.time);
+		io.sockets.emit('play', socket.time);
 	});
 	
-
+	
 	
 	// when the client emits 'sendchat', this listens and executes
 	socket.on('sendchat', function (data) {
