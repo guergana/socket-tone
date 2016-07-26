@@ -76,11 +76,6 @@
 			    
 			};			
 			
-	//Load loop
-
-	var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'audio/paniloop.mp3');
-	audioElement.load();
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -95,7 +90,7 @@
 		
 			//Load loop
 	
-				audioElement.oncanplaythrough = function() {
+				/*audioElement.oncanplaythrough = function() {
 					audioElement.play();
 					console.log("loop loaded! biyatch");
 			};
@@ -103,7 +98,7 @@
 				audioElement.addEventListener('ended', function() {
 					this.currentTime = 0;
 					this.play();
-				}, false);
+				}, false);*/
 				
 			
 				
@@ -127,7 +122,6 @@
 		
 	} );
 	
-	
 	// listener, whenever the server emits 'updateusers', this updates the username list
 	socket.on('updateusers', function(data) {
 		$('#users').empty();
@@ -137,7 +131,13 @@
 		
 	});
 	
-/*	audioElement.oncanplaythrough = function() {
+		//Load loop
+
+	var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'audio/paniloop.mp3');
+	audioElement.load();
+	
+    audioElement.oncanplaythrough = function() {
 		audioElement.play();
 		console.log("loop loaded! biyatch");
 };
@@ -145,7 +145,8 @@
 	audioElement.addEventListener('ended', function() {
 		this.currentTime = 0;
 		this.play();
-	}, false);*/
+	}, false);
+
 	
 
 </script>
