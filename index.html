@@ -114,7 +114,10 @@
 	var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'audio/paniloop.mp3');
     audioElement.load();
-	audio.autoplay = true;
+	audioElement.oncanplaythrough = function() {
+		audioElement.play();
+		alert("loop loaded! biyatch");
+};
 	
 
 </script>
