@@ -91,7 +91,6 @@
 		
 		socket.emit('adduser', name);
 		
-		socket.emit('time', audioElement.currentTime);
 		
 		if( name != null){
 				
@@ -105,7 +104,7 @@
 					this.play();
 				}, false);
 				
-			socket.emit('time', audioElement.currentTime);
+			socket.emit('settime', audioElement.currentTime);
 				
 		}
 	});
