@@ -81,23 +81,21 @@
 	//Load loop
 	var audioElement = document.createElement('audio');
 	audioElement.setAttribute('src', 'audio/paniloop.mp3');
-	audioElement.load();
-	
 	
 
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
 		
 		var name = prompt("What's your name?");
-		
+		audioElement.load();
 		socket.emit('adduser', name);
 		
 	});
 
 	socket.on('isfirstuser', function(isfirstuser){
-		console.log("is this the first user? " + isfirstuser);
 		
 		if(isfirstuser == true){
+				
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();
 			};
@@ -106,10 +104,12 @@
 					this.currentTime = 0;
 					this.play();
 				}, false);
-			console.log('hola desde adentro de donde debe tocar la musica');
-		} else{
-				socket.emit('time', audioElement.currentTime);
-		}
+				
+		} /*else{
+				 socket.emit('time', audioElement.currentTime);
+			
+				
+		} */
 		
 	});
 	
