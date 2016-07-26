@@ -111,6 +111,8 @@
 	});
 
 	socket.on('isfirstuser', function(isfirstuser){
+		console.log("is this the first user? " + isfirstuser);
+		
 		if(isfirstuser == true){
 				audioElement.oncanplaythrough = function() {
 					audioElement.play();

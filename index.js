@@ -35,8 +35,8 @@ io.on('connection', function(socket){
 		// update the list of users in chat, client-side
 		io.sockets.emit('updateusers', usernames);
 		
-		io.sockets.emit('isfirstuser', isfirstuser);
-		console.log("how many active users: " + usernames.length + " isfirstuser var = "+ isfirstuser);
+		socket.broadcast.emit('isfirstuser', isfirstuser);
+		
 		
 	});
 	
