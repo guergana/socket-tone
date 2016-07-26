@@ -95,10 +95,8 @@
 	socket.on('isfirstuser', function(isfirstuser){
 		
 		if(isfirstuser == true){
+				$('#messages').prepend('<button onclick="playloop()" type="button">Start loop</button>');
 				
-				audioElement.oncanplaythrough = function() {
-					audioElement.play();
-			};
 
 				audioElement.addEventListener('ended', function() {
 					this.currentTime = 0;
@@ -125,6 +123,12 @@
 				}, false);
 	
 	});
+	
+	function playloop(){
+		audioElement.oncanplaythrough = function() {
+					audioElement.play();
+			};
+	}
 	
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
