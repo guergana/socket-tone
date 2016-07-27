@@ -34,48 +34,17 @@
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="scripts/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="./scripts/draggabilly.js"></script>
-<script type="text/javascript" src="./scripts/StartAudioContext.js"></script>
-<script type="text/javascript" src="./scripts/Interface.js"></script>
-<script type="text/javascript" src="./scripts/qwerty-hancock.js"></script>
+
 <script>
 
 
 
   var socket = io();
   
-  var keyboard = new QwertyHancock({
-				id: "Keyboard",
-				width: $(window).width(),
-				height: 150,
-				octaves: Interface.isMobile ? 1.26 : 2,
-				startNote: "C4",
-				whiteKeyColour: "white",
-				blackKeyColour: "#22DBC0",
-				hoverColour: "#1EDF3E",
-				activeColour : "#ED33CF"
-			});
-			
-
-		keyboard.keyDown = function (note, frequency) {
-			    var data = {
-				note: note,
-				frequency : frequency,
-				type: 'keyDown'
-				};
+ 
 				
 				 socket.emit('sendchat', data);
-			};
-			
-		keyboard.keyUp = function (note, frequency) {
-			var data = {
-				note: note,
-				frequency : frequency,
-				type: 'keyUp'
-			};
-				socket.emit('sendchat', data);
-			    
-			};		
+		
 			
 			
 	//Load loop
@@ -95,7 +64,7 @@
 	socket.on('isfirstuser', function(isfirstuser){
 		
 		if(isfirstuser == true){
-				$('#messages').append('<button onclick="playloop()" type="button">Start loop</button>');
+				$('#messages').append('<button onclick="playloop()" type="button">Start loop</button><br/>');
 				
 
 				audioElement.addEventListener('ended', function() {
@@ -137,7 +106,7 @@
 		
 		
 		if(data.type === 'keyDown'){
-			synth.triggerAttack(data.frequency);
+			synth.triggerAttack(data.note);
 			$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
 		} else if(data.type === 'keyUp'){
 			synth.triggerRelease();
@@ -164,6 +133,56 @@
 
 </script>
 	<script type="text/javascript">
+	
+	function keyToNote_func(pressed_key){
+			var noteNames = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
+			
+				var pitchClass = noteNames[pressed_key % 12];
+                var octave     = (pressed_key - 12) / 12 >> 0;
+                var noteName   = pitchClass + octave;
+
+                return noteName;
+                
+		}
+		
+		$.getJSON('scripts/keymap.json', function(data) {
+  
+			for (var i = 0; i < data.length; i++) {
+				$.each(data[i], function(j, object) {
+					//console.log(object.keyCap + "MIDI " + object.keyCode);
+					
+					 $( document ).keypress(function( event ) {
+						
+						var realKey = String.fromCharCode(event.which);
+						
+						if (object.keyCap == realKey) {
+							$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
+							//alert("note:" + keyToNote_func(object.keyCode));
+							
+							var data = {
+								note: object.keyCode,
+								type: 'keyDown'
+							};
+							socket.emit('sendchat', data);
+							return;
+						}
+					});
+					
+					 $( document ).keyup(function( ) {
+							
+						var data = {
+							note: note,
+							type: 'keyUp'
+						};
+						socket.emit('sendchat', data);
+						
+						
+					});
+				});
+			}
+         
+		
+  });
 
 		var synth = new Tone.Synth({
 			"oscillator" : {
