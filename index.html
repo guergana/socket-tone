@@ -24,7 +24,7 @@
 	
 </div>
 
-  <div style="float:left;width:300px;overflow-y:scroll-y;padding:10px;">
+  <div style="float:left;width:500px;overflow-y:scroll-y;padding:10px;">
 	
     <ul id="messages"></ul>
     <!--<form action="">
@@ -150,8 +150,10 @@
 							//$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
 							//alert("note:" + keyToNote_func(object.keyCode));
 							
+							note = keyToNote_func(object.keyCode);
+							
 							var data = {
-								note: object.keyCode,
+								note: note,
 								MIDI : object.keyCode,
 								keyboard: object.keyCap,
 								type: 'keyDown'
