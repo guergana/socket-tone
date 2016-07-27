@@ -95,8 +95,7 @@
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
-		
-		
+	
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.note);
 			$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
@@ -163,7 +162,6 @@
 					 $( document ).keyup(function( ) {
 							
 						var data = {
-							note: note,
 							type: 'keyUp'
 						};
 						socket.emit('sendchat', data);
