@@ -150,7 +150,14 @@
 							//$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
 							//alert("note:" + keyToNote_func(object.keyCode));
 							
-							note = keyToNote_func(object.keyCode);
+							//if it's a double note make it a simple note
+							
+							var note = keyToNote_func(object.keyCode);
+							
+							if( note.indexOf( "/" ) != -1 ){
+								note =  keyToNote_func(object.keyCode).substring( 0, note.indexOf( "/" ) -1 );
+							}
+							
 							
 							var data = {
 								note: note,
