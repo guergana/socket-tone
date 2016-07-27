@@ -155,7 +155,7 @@
 							var note = keyToNote_func(object.keyCode);
 							
 							if( note.indexOf( "/" ) != -1 ){
-								note =  note.substring( note.indexOf( "/" ) , note.length );
+								note =  note.substring( note.indexOf( "/" )+1 , note.length );
 							}
 							
 							
