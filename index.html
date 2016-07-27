@@ -98,7 +98,7 @@
 	
 		if(data.type === 'keyDown'){
 			synth.triggerAttack(data.note);
-			$('#messages').append('<b class="username">'+username + ':</b> ' + data.note + '<br>');
+			$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
 		} else if(data.type === 'keyUp'){
 			synth.triggerRelease();
 		} else {
@@ -147,11 +147,13 @@
 						var realKey = String.fromCharCode(event.which);
 						
 						if (object.keyCap == realKey) {
-							$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
+							//$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
 							//alert("note:" + keyToNote_func(object.keyCode));
 							
 							var data = {
 								note: object.keyCode,
+								MIDI : object.keyCode,
+								keyboard: object.keyCap,
 								type: 'keyDown'
 							};
 							socket.emit('sendchat', data);
