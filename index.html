@@ -22,7 +22,7 @@
 	#users > div{
 		width: 15px;
 		height: 15px;
-		background-color:#000000;
+		
 	}
     </style>
 	<link rel="stylesheet" href="css/jquery.simplecolorpicker.css">
@@ -171,7 +171,7 @@
 	socket.on('updateusers', function(data) {
 		$('#users').empty();
 		$.each(data, function(key, value) {
-			$('#users').append('<div></div>').css('background-color', key);
+			$('#users').append('<div style="background-color:'+ key +'"></div>');
 		});
 		
 	});
