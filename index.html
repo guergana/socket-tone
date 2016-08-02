@@ -13,10 +13,10 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
 	  .username { color: #f00; }
+	canvas {width: 100%; height: auto;}
     </style>
   </head>
   <body>
-  <div id="Keyboard" style="width:600px;"></div>
   <div class="float:left;clear:both;"></div>
   <div style="float:left;width:100px;border-right:1px solid black;padding:10px;overflow:scroll-y;">
 	<b>USERS</b>
@@ -34,6 +34,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="scripts/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="scripts/p5.min.js"></script>
 
 <script>
 
@@ -51,6 +52,14 @@
 		audioElement.load();
 		socket.emit('adduser', name);
 		
+		//p5 code for graphics
+		
+		function setup(){
+		
+			smooth();
+			frameRate(30);
+			createCanvas(windowWidth, windowHeight);
+		}
 	});
 
 	socket.on('isfirstuser', function(isfirstuser){
@@ -96,16 +105,28 @@
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 	
-		if(data.type === 'keyDown'){
-			synth.triggerAttack(data.note);
-			$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
-		} else if(data.type === 'keyUp'){
-			synth.triggerRelease();
-		} else {
+		function draw(){ // from p5
+	
+			if(data.type === 'keyDown'){
+				synth.triggerAttack(data.note);
+				$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
+					
+					var x = random(0,width);
+					var y = random(0,height);
+					var a= random(50,100);
+					noStroke();
+					fill(255,0,0);
+					ellipse(x,y,a,a);
+					
+			} else if(data.type === 'keyUp'){
+				synth.triggerRelease();
+			} else {
+			
+				// if it's not a note. if it's a SERVER message, as when someone connects
+				$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
+			}
 		
-			// if it's not a note. if it's a SERVER message, as when someone connects
-			$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
-		}
+		}// closes draw() from p5
 		
 		
 	} );
