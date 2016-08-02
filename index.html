@@ -18,6 +18,12 @@
 		background:rgba(0,0,0,0.5);
 		width:100%;height:100%;position:absolute;z-index:2;
 	}
+	
+	#users > div{
+		width: 15px;
+		height: 15px;
+		background-color:#000000;
+	}
     </style>
 	<link rel="stylesheet" href="css/jquery.simplecolorpicker.css">
   </head>
@@ -165,7 +171,7 @@
 	socket.on('updateusers', function(data) {
 		$('#users').empty();
 		$.each(data, function(key, value) {
-			$('#users').append('<div>' + key + '</div>');
+			$('#users').append('<div></div>').css('background-color', key);
 		});
 		
 	});
