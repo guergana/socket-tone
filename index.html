@@ -23,7 +23,7 @@
   </head>
   <body>
   <div class="color_choose"> 
-		<select name="colorpicker" style="margin:0 auto;margin-top:30%;">
+		<select name="colorpicker" style="margin:0 auto;position:relative;top:30%;">
 			  <option value="#7bd148">Green</option>
 			  <option value="#5484ed">Bold blue</option>
 			  <option value="#a4bdfc">Blue</option>
@@ -73,8 +73,6 @@
 	var context = canvas.getContext('2d');
 	
 	
-	
-
   socket.on('connect', function(){
 		// call the server-side function 'adduser' and send one parameter (value of prompt)
 		
@@ -82,16 +80,12 @@
 		audioElement.load();
 		
 		$('select[name="colorpicker"]').simplecolorpicker({
-			  picker: true
+			  picker: false
 			}).on('change', function() {
 				user_color = $('select[name="colorpicker"]').val();
 				$('.color_choose').css('display','none');
 				socket.emit('adduser', user_color);
 			});
-		
-		
-		
-		
 		
 	
 	});
@@ -117,7 +111,7 @@
 	socket.on('play', function(time){
 			audioElement.currentTime = time;
 			console.log(time);
-		audioElement.oncanplaythrough = function() {
+			audioElement.oncanplaythrough = function() {
 					
 					audioElement.play();
 			};
@@ -139,8 +133,6 @@
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 	
-		
-	
 			if(data.type === 'keyDown'){
 				synth.triggerAttack(data.note);
 				$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
@@ -149,7 +141,6 @@
 				var centerX = Math.random() *canvas.width + radius; 
 				var centerY = Math.random() *canvas.height + radius;
 				  
-
 				context.beginPath();
 				context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
 				context.fillStyle = 'green';
@@ -160,7 +151,6 @@
 				synth.triggerRelease();
 				context.clearRect(0,0,canvas.width,canvas.height);
 			} else {
-			
 				// if it's not a note. if it's a SERVER message, as when someone connects
 				$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
 			}
