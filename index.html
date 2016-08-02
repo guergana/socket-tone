@@ -18,31 +18,36 @@
   </head>
   <body>
   <div class="float:left;clear:both;"></div>
-  <div style="float:left;width:100px;border-right:1px solid black;padding:10px;overflow:scroll-y;">
+  <div style="float:left;width:19%;border-right:1px solid black;padding:10px;overflow:scroll-y;">
 	<b>USERS</b>
 	<div id="users"></div>
 	
 </div>
 
-  <div style="float:left;width:500px;overflow-y:scroll-y;padding:10px;">
+  <div style="float:left;width:75%;overflow-y:scroll-y;padding:10px;">
 	
-    <ul id="messages"></ul>
-    <!--<form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form> -->
+    <ul id="messages" style="position:absolute;z-index:1;"></ul>
+   <div id="canvas" style="position:absolute;z-index:0;"></div>
 </div>
+	
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="scripts/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="scripts/p5.min.js"></script>
 
 <script>
 
   var socket = io();	
-			
+  
+	var canvas = document.getElementById("canvas");
 	//Load loop
 	var audioElement = document.createElement('audio');
 	audioElement.setAttribute('src', 'audio/paniloop.mp3');
+	
+	//make canvas full size: 
+	canvas.width  = window.innerWidth;
+	canvas.height = window.innerHeight;
+	
+	var context = canvas.getContext('2d');
 	
 
   socket.on('connect', function(){
@@ -52,14 +57,8 @@
 		audioElement.load();
 		socket.emit('adduser', name);
 		
-		//p5 code for graphics
 		
-		function setup(){
-		
-			smooth();
-			frameRate(30);
-			createCanvas(windowWidth, windowHeight);
-		}
+	
 	});
 
 	socket.on('isfirstuser', function(isfirstuser){
@@ -105,28 +104,33 @@
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 	
-		function draw(){ // from p5
+		
 	
 			if(data.type === 'keyDown'){
 				synth.triggerAttack(data.note);
 				$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
 					
-					var x = random(0,width);
-					var y = random(0,height);
-					var a= random(50,100);
-					noStroke();
-					fill(255,0,0);
-					ellipse(x,y,a,a);
+				var radius = Math.random() * 100 + 10;
+				var centerX = Math.random() *canvas.width + radius; 
+				var centerY = Math.random() *canvas.height + radius;
+				  
+
+				context.beginPath();
+				context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+				context.fillStyle = 'green';
+				context.fill();
+					
 					
 			} else if(data.type === 'keyUp'){
 				synth.triggerRelease();
+				context.clearRect(0,0,canvas.width,canvas.height);
 			} else {
 			
 				// if it's not a note. if it's a SERVER message, as when someone connects
 				$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
 			}
 		
-		}// closes draw() from p5
+		
 		
 		
 	} );
