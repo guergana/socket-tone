@@ -140,7 +140,10 @@
 	socket.on('updatechat', function (username, data) {
 	
 			if(data.type === 'keyDown'){
-				synth.triggerAttack(data.note);
+				//use this to trigger relase on keyUp, but it's buggy, we'll programm it only on keypress for now
+				//synth.triggerAttack(data.note);
+				//play a middle note for the duration of an 8th note
+				synth.triggerAttackRelease(data.note, "4n");
 				$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
 					
 				var radius = Math.random() * 100 + 10;
@@ -154,7 +157,7 @@
 					
 					
 			} else if(data.type === 'keyUp'){
-				synth.triggerRelease(data.note);
+				//synth.triggerRelease(data.note); //this is buggy
 				context.clearRect(0,0,canvas.width,canvas.height);
 			} else {
 				// if it's not a note. if it's a SERVER message, as when someone connects
