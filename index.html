@@ -154,7 +154,7 @@
 					
 					
 			} else if(data.type === 'keyUp'){
-				synth.triggerRelease();
+				synth.triggerRelease(data.note);
 				context.clearRect(0,0,canvas.width,canvas.height);
 			} else {
 				// if it's not a note. if it's a SERVER message, as when someone connects
