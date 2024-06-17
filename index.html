@@ -3,7 +3,6 @@
 <html>
   <head>
     <title>Interative Socket Music</title>
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.js">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -58,21 +57,23 @@
 </div>
 	    
 <script type="text/javascript" src="./scripts/Tone.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="scripts/jquery.simplecolorpicker.js"></script>
+<script type="text/javascript" src="./scripts/jquery.simplecolorpicker.js"></script>
 
-<script>
+<script type="text/javascript">
 
+//Load loop
+var audioElement = document.createElement('audio');
+audioElement.setAttribute('src', 'audio/mbira30s.mp3');
+audioElement.volume = 0.2; 
 	
+
 $(document).ready( function(){
   	var socket = io();	
   
 	var canvas = document.getElementById("canvas");
-	//Load loop
-	var audioElement = document.createElement('audio');
-	audioElement.setAttribute('src', 'audio/mbira30s.mp3');
-	audioElement.volume = 0.2; 
-	
+
 	//make canvas full size: 
 	canvas.width  = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -172,6 +173,53 @@ $(document).ready( function(){
 			}
 		}).toMaster();
 
+		$.getJSON('scripts/keymap.json', function(data) {
+  
+  for (var i = 0; i < data.length; i++) {
+	  $.each(data[i], function(j, object) {
+		  //console.log(object.keyCap + "MIDI " + object.keyCode);
+		  
+		   $( document ).keypress(function( event ) {
+			  
+			  var realKey = String.fromCharCode(event.which);
+			  
+			  if (object.keyCap == realKey) {
+				  //$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
+				  //alert("note:" + keyToNote_func(object.keyCode));
+				  
+				  //if it's a double note make it a simple note
+				  
+				  var note = keyToNote_func(object.keyCode);
+				  
+				  if( note.indexOf( "/" ) != -1 ){
+					  note =  note.substring( note.indexOf( "/" )+1 , note.length );
+				  }
+				  
+				  
+				  var data = {
+					  note: note,
+					  MIDI : object.keyCode,
+					  keyboard: object.keyCap,
+					  type: 'keyDown'
+				  };
+				  socket.emit('sendchat', data);
+				  return;
+			  }
+		  });
+		  
+		   $( document ).keyup(function( ) {
+				  
+			  var data = {
+				  type: 'keyUp'
+			  };
+			  socket.emit('sendchat', data);
+			  
+			  
+		  });
+	  });
+  }
+});
+
 });
 
 function playloop(){
@@ -179,78 +227,20 @@ function playloop(){
 	//audioElement.oncanplaythrough = function() {
 	audioElement.play();
 	//};
-}	
+}
+
+function keyToNote_func(pressed_key){
+	var noteNames = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
+	
+	var pitchClass = noteNames[pressed_key % 12];
+	var octave     = (pressed_key - 12) / 12 >> 0;
+	var noteName   = pitchClass + octave;
+
+	return noteName;
+		
+}
 
 </script>
-	<script type="text/javascript">
-	
-	function keyToNote_func(pressed_key){
-			var noteNames = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
-			
-				var pitchClass = noteNames[pressed_key % 12];
-                var octave     = (pressed_key - 12) / 12 >> 0;
-                var noteName   = pitchClass + octave;
-
-                return noteName;
-                
-		}
-		
-		$.getJSON('scripts/keymap.json', function(data) {
-  
-			for (var i = 0; i < data.length; i++) {
-				$.each(data[i], function(j, object) {
-					//console.log(object.keyCap + "MIDI " + object.keyCode);
-					
-					 $( document ).keypress(function( event ) {
-						
-						var realKey = String.fromCharCode(event.which);
-						
-						if (object.keyCap == realKey) {
-							//$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
-							//alert("note:" + keyToNote_func(object.keyCode));
-							
-							//if it's a double note make it a simple note
-							
-							var note = keyToNote_func(object.keyCode);
-							
-							if( note.indexOf( "/" ) != -1 ){
-								note =  note.substring( note.indexOf( "/" )+1 , note.length );
-							}
-							
-							
-							var data = {
-								note: note,
-								MIDI : object.keyCode,
-								keyboard: object.keyCap,
-								type: 'keyDown'
-							};
-							socket.emit('sendchat', data);
-							return;
-						}
-					});
-					
-					 $( document ).keyup(function( ) {
-							
-						var data = {
-							type: 'keyUp'
-						};
-						socket.emit('sendchat', data);
-						
-						
-					});
-				});
-			}
-
-
-  });
-
-		// var synth = new Tone.PolySynth(6, Tone.Synth, {
-		// 	"oscillator" : {
-		// 		"partials" : [0, 2, 3, 4],
-		// 	}
-		// }).toMaster();
-
-	</script>
 
 	
   </body>
