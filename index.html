@@ -64,7 +64,7 @@
 <script>
 
 	
-$(document).ready(){
+$(document).ready( function(){
   	var socket = io();	
   
 	var canvas = document.getElementById("canvas");
@@ -80,22 +80,22 @@ $(document).ready(){
 	var context = canvas.getContext('2d');
 	
 	
-	  socket.on('connect', function(){
-			// call the server-side function 'adduser' and send one parameter (value of prompt)
-			
-			var user_color;
-			audioElement.load();
-			
-			$('select[name="colorpicker"]').simplecolorpicker({
-				  picker: false
-				}).on('change', function() {
-					user_color = $('select[name="colorpicker"]').val();
-					$('.color_choose').css('display','none');
-					socket.emit('adduser', user_color);
-				});
-			
+	socket.on('connect', function(){
+		// call the server-side function 'adduser' and send one parameter (value of prompt)
 		
-		});
+		var user_color;
+		audioElement.load();
+		
+		$('select[name="colorpicker"]').simplecolorpicker({
+				picker: false
+			}).on('change', function() {
+				user_color = $('select[name="colorpicker"]').val();
+				$('.color_choose').css('display','none');
+				socket.emit('adduser', user_color);
+			});
+		
+	
+	});
 
 	socket.on('isfirstuser', function(isfirstuser){
 		
@@ -133,34 +133,30 @@ $(document).ready(){
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
 	
-			if(data.type === 'keyDown'){
-				//use this to trigger relase on keyUp, but it's buggy, we'll programm it only on keypress for now
-				//synth.triggerAttack(data.note);
-				//play a middle note for the duration of an 8th note
-				synth.triggerAttackRelease(data.note, "4n");
-				$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
-					
-				var radius = Math.random() * 100 + 10;
-				var centerX = Math.random() *canvas.width + radius; 
-				var centerY = Math.random() *canvas.height + radius;
-				  
-				context.beginPath();
-				context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-				context.fillStyle = username;
-				context.fill();
-					
-					
-			} else if(data.type === 'keyUp'){
-				//synth.triggerRelease(data.note); //this is buggy
-				context.clearRect(0,0,canvas.width,canvas.height);
-			} else {
-				// if it's not a note. if it's a SERVER message, as when someone connects
-				$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
-			}	
-		
+		if(data.type === 'keyDown'){
+			//use this to trigger relase on keyUp, but it's buggy, we'll programm it only on keypress for now
+			//synth.triggerAttack(data.note);
+			//play a middle note for the duration of an 8th note
+			synth.triggerAttackRelease(data.note, "4n");
+			$('#messages').append('<b class="username">'+username + ':</b> Pressed key: '+ data.keyboard +' Midi Code: '+ data.MIDI +' Note: ' + data.note + '<br>');
+				
+			var radius = Math.random() * 100 + 10;
+			var centerX = Math.random() *canvas.width + radius; 
+			var centerY = Math.random() *canvas.height + radius;
+				
+			context.beginPath();
+			context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+			context.fillStyle = username;
+			context.fill();	
+		} else if(data.type === 'keyUp'){
+			//synth.triggerRelease(data.note); //this is buggy
+			context.clearRect(0,0,canvas.width,canvas.height);
+		} else {
+			// if it's not a note. if it's a SERVER message, as when someone connects
+			$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
+		}
 	} );
-	
-	
+
 	// listener, whenever the server emits 'updateusers', this updates the username list
 	socket.on('updateusers', function(data) {
 		$('#users').empty();
@@ -169,7 +165,14 @@ $(document).ready(){
 		});
 		
 	});
-}
+
+	var synth = new Tone.PolySynth(6, Tone.Synth, {
+			"oscillator" : {
+				"partials" : [0, 2, 3, 4],
+			}
+		}).toMaster();
+
+});
 
 function playloop(){
 		
@@ -237,15 +240,15 @@ function playloop(){
 					});
 				});
 			}
-         
-		
+
+
   });
 
-		var synth = new Tone.PolySynth(6, Tone.Synth, {
-			"oscillator" : {
-				"partials" : [0, 2, 3, 4],
-			}
-		}).toMaster();
+		// var synth = new Tone.PolySynth(6, Tone.Synth, {
+		// 	"oscillator" : {
+		// 		"partials" : [0, 2, 3, 4],
+		// 	}
+		// }).toMaster();
 
 	</script>
 
