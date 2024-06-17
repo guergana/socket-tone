@@ -66,7 +66,7 @@
 //Load loop
 var audioElement = document.createElement('audio');
 audioElement.setAttribute('src', 'audio/mbira30s.mp3');
-audioElement.volume = 0.2; 
+audioElement.volume = 0.2;
 	
 
 $(document).ready( function(){
@@ -102,7 +102,6 @@ $(document).ready( function(){
 		
 		if(isfirstuser == true){
 				$('#messages').append('<button onclick="playloop()" type="button">Start loop</button><br/>');
-				
 
 				audioElement.addEventListener('ended', function() {
 					this.currentTime = 0;
@@ -120,7 +119,6 @@ $(document).ready( function(){
 			audioElement.currentTime = time;
 			console.log(time);
 			audioElement.oncanplaythrough = function() {
-				
 					audioElement.play();
 			};
 		audioElement.addEventListener('ended', function() {
@@ -173,52 +171,49 @@ $(document).ready( function(){
 			}
 		}).toMaster();
 
-		$.getJSON('scripts/keymap.json', function(data) {
+	$.getJSON('scripts/keymap.json', function(data) {
   
-  for (var i = 0; i < data.length; i++) {
-	  $.each(data[i], function(j, object) {
-		  //console.log(object.keyCap + "MIDI " + object.keyCode);
-		  
-		   $( document ).keypress(function( event ) {
-			  
-			  var realKey = String.fromCharCode(event.which);
-			  
-			  if (object.keyCap == realKey) {
-				  //$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
-				  //alert("note:" + keyToNote_func(object.keyCode));
-				  
-				  //if it's a double note make it a simple note
-				  
-				  var note = keyToNote_func(object.keyCode);
-				  
-				  if( note.indexOf( "/" ) != -1 ){
-					  note =  note.substring( note.indexOf( "/" )+1 , note.length );
-				  }
-				  
-				  
-				  var data = {
-					  note: note,
-					  MIDI : object.keyCode,
-					  keyboard: object.keyCap,
-					  type: 'keyDown'
-				  };
-				  socket.emit('sendchat', data);
-				  return;
-			  }
-		  });
-		  
-		   $( document ).keyup(function( ) {
-				  
-			  var data = {
-				  type: 'keyUp'
-			  };
-			  socket.emit('sendchat', data);
-			  
-			  
-		  });
-	  });
-  }
-});
+		for (var i = 0; i < data.length; i++) {
+			$.each(data[i], function(j, object) {
+				//console.log(object.keyCap + "MIDI " + object.keyCode);
+				
+				$( document ).keypress(function( event ) {
+					
+					var realKey = String.fromCharCode(event.which);
+					
+					if (object.keyCap == realKey) {
+						//$("#messages").append("keyboard: " + object.keyCap + " MIDI: " + object.keyCode + " Note: " + keyToNote_func(object.keyCode) + "<br/>" );
+						//alert("note:" + keyToNote_func(object.keyCode));
+						
+						//if it's a double note make it a simple note
+						
+						var note = keyToNote_func(object.keyCode);
+						
+						if( note.indexOf( "/" ) != -1 ){
+							note =  note.substring( note.indexOf( "/" )+1 , note.length );
+						}
+						
+						
+						var data = {
+							note: note,
+							MIDI : object.keyCode,
+							keyboard: object.keyCap,
+							type: 'keyDown'
+						};
+						socket.emit('sendchat', data);
+						return;
+					}
+				});
+				
+				$( document ).keyup(function( ) {	
+					var data = {
+						type: 'keyUp'
+					};
+					socket.emit('sendchat', data);
+				});
+			});
+  		}
+	});
 
 });
 

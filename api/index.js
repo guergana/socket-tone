@@ -38,7 +38,6 @@ io.on('connection', function(socket){
 		
 		io.sockets.emit('isfirstuser', isfirstuser);
 		
-		
 	});
 	
 	socket.on('time', function(time){
