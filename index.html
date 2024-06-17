@@ -57,7 +57,7 @@
    <canvas id="canvas" style="position:absolute;z-index:0;"></canvas>
 </div>
 	    
-<script type="text/javascript" src="scripts/Tone.js"></script>
+<script type="text/javascript" src="./scripts/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/jquery.simplecolorpicker.js"></script>
 
@@ -129,13 +129,6 @@ $(document).ready(){
 	
 	});
 	
-	function playloop(){
-		
-		//audioElement.oncanplaythrough = function() {
-					audioElement.play();
-			//};
-	}
-	
   
   // listener, whenever the server emits 'updatechat', this updates the chat body
 	socket.on('updatechat', function (username, data) {
@@ -177,7 +170,13 @@ $(document).ready(){
 		
 	});
 }
-	
+
+function playloop(){
+		
+	//audioElement.oncanplaythrough = function() {
+	audioElement.play();
+	//};
+}	
 
 </script>
 	<script type="text/javascript">
