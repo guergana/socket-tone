@@ -56,8 +56,7 @@
     <ul id="messages" style="position:absolute;z-index:1;"></ul>
    <canvas id="canvas" style="position:absolute;z-index:0;"></canvas>
 </div>
-	
-<script src="/socket.io/socket.io.js"></script>
+	    
 <script type="text/javascript" src="scripts/Tone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/jquery.simplecolorpicker.js"></script>
@@ -65,8 +64,8 @@
 <script>
 
 	
-
-  var socket = io();	
+$(document).ready(){
+  	var socket = io();	
   
 	var canvas = document.getElementById("canvas");
 	//Load loop
@@ -81,22 +80,22 @@
 	var context = canvas.getContext('2d');
 	
 	
-  socket.on('connect', function(){
-		// call the server-side function 'adduser' and send one parameter (value of prompt)
+	  socket.on('connect', function(){
+			// call the server-side function 'adduser' and send one parameter (value of prompt)
+			
+			var user_color;
+			audioElement.load();
+			
+			$('select[name="colorpicker"]').simplecolorpicker({
+				  picker: false
+				}).on('change', function() {
+					user_color = $('select[name="colorpicker"]').val();
+					$('.color_choose').css('display','none');
+					socket.emit('adduser', user_color);
+				});
+			
 		
-		var user_color;
-		audioElement.load();
-		
-		$('select[name="colorpicker"]').simplecolorpicker({
-			  picker: false
-			}).on('change', function() {
-				user_color = $('select[name="colorpicker"]').val();
-				$('.color_choose').css('display','none');
-				socket.emit('adduser', user_color);
-			});
-		
-	
-	});
+		});
 
 	socket.on('isfirstuser', function(isfirstuser){
 		
@@ -164,10 +163,7 @@
 			} else {
 				// if it's not a note. if it's a SERVER message, as when someone connects
 				$('#messages').append('<b class="username">'+username + ':</b> ' + data + '<br>');
-			}
-		
-		
-		
+			}	
 		
 	} );
 	
@@ -180,7 +176,7 @@
 		});
 		
 	});
-	
+}
 	
 
 </script>
